@@ -127,7 +127,7 @@
               var open_time_field = control.find("input[name='open']");
               var close_time_field = control.find("input[name='close']");
 
-              $.getJSON("/_calc_times", {control_dist: control_dist, total_dist: total_dist, time: begin_date}).done(
+              $.getJSON(TIME_CALC_URL, {control_dist: control_dist, total_dist: total_dist, time: begin_date}).done(
                 function(data) {
                   // retrieve the object sent back by the server, contains calculated open and close times
                    var times = data.result;
