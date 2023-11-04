@@ -115,22 +115,25 @@
             var SCRIPT_ROOT = {{ request.script_root|tojson|safe }} ;
             var TIME_CALC_URL = SCRIPT_ROOT + "/_calc_times";
 
-            // FIX ME!
-            // Right now, only the kilometers are passed
-            // you need to pass much more!
-            // View flask_brevets.py for details.
             function calc_times(control) {
-              var km = control.find("input[name='km']").val();
+            // retrieve the values from the page to send to the server
+              var control_dist = control.find("input[name='km']").val();
+              console.log(control_dist);
+              var total_dist = $("#brevet_dist_km").val();
+              console.log(total_dist);
+              var begin_date = $("#begin_date").val();
+              console.log(begin_date);
+            // set the path to the open and close fields to make setting them later easy 
               var open_time_field = control.find("input[name='open']");
               var close_time_field = control.find("input[name='close']");
 
-              $.getJSON(TIME_CALC_URL, {km: km}).done(
+              $.getJSON("/_calc_times", {control_dist: control_dist, total_dist: total_dist, time: begin_date}).done(
                 function(data) {
+                  // retrieve the object sent back by the server, contains calculated open and close times
                    var times = data.result;
                    console.log("Got a response: ");
                    console.log("Response.open = " + times.open);
-                   // This part will automatically fill the open and close slots,
-                   // so don't worry about those.
+                   // automatically fills the open and close slots
                    open_time_field.val(moment(times.open).format("YYYY-MM-DDTHH:mm"));
                    close_time_field.val(moment(times.close).format("YYYY-MM-DDTHH:mm"));
                  }
@@ -147,20 +150,20 @@
                 $('input[name="miles"]').change(
                    function() {
                        var miles = parseFloat($(this).val());
-                       var km = (1.609344 * miles).toFixed(6) ;
-                       console.log("Converted " + miles + " miles to " + km + " kilometers");
+                       var control_dist = (1.609344 * miles).toFixed(6) ;
+                       console.log("Converted " + miles + " miles to " + control_dist + " kilometers");
                        var control_entry = $(this).parents(".control")
                        var target = control_entry.find("input[name='km']");
-                       target.val( km );
+                       target.val( control_dist );
                        // Then calculate times for this entry
                        calc_times(control_entry);
                     });
 
                 $('input[name="km"]').change(
                    function() {
-                       var km = parseFloat($(this).val());
-                       var miles = (0.621371 * km).toFixed(6) ;
-                       console.log("Converted " + km + " km to " + miles + " miles");
+                       var control_dist = parseFloat($(this).val());
+                       var miles = (0.621371 * control_dist).toFixed(6) ;
+                       console.log("Converted " + control_dist + " km to " + miles + " miles");
                        var control_entry = $(this).parents(".control")
                        var target = control_entry.find("input[name='miles']");
                        target.val( miles );
