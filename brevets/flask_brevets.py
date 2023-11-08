@@ -13,7 +13,7 @@ import config
 import logging
 
 ###
-# Globals
+# Globals 
 ###
 app = flask.Flask(__name__)
 CONFIG = config.configuration()
@@ -58,8 +58,8 @@ def _calc_times():
 
     app.logger.debug("km={}".format(control_dist))
     app.logger.debug("request.args: {}".format(request.args))
-    open_time = acp_times.open_time(control_dist, total_dist, start_time).format('YYYY-MM-DDTHH:mm')
-    close_time = acp_times.close_time(control_dist, total_dist, start_time).format('YYYY-MM-DDTHH:mm')
+    open_time = acp_times.open_time(control_dist, total_dist, arrow.get(start_time)).format('YYYY-MM-DDTHH:mm')
+    close_time = acp_times.close_time(control_dist, total_dist, arrow.get(start_time)).format('YYYY-MM-DDTHH:mm')
     result = {"open": open_time, "close": close_time}
     return flask.jsonify(result=result)
 

@@ -47,6 +47,7 @@ def test_ex1_closings():
     assert cont3 == start_time.shift(minutes=700)
     assert cont4 == start_time.shift(minutes=810)
 
+# for pytests (much better)
 '''def test_negatives():
     start_time = arrow.get(TIME1)
     with pytest.raises(ValueError) as exec_info:
@@ -89,4 +90,7 @@ def test_ex3():
     cont_close = close_time(890, 1000, start_time)
     assert cont_open == start_time.shift(minutes=1749)
     assert cont_close == start_time.shift(minutes=3923)
+
+def test_grader_ex():
+    assert open_time(220, 400, arrow.get("2018-11-17T06:00")).format("YYYY-MM-DDTHH:mm") == arrow.get("2018-11-17T12:30").format("YYYY-MM-DDTHH:mm")
 

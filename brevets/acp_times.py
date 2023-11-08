@@ -1,5 +1,5 @@
 """
-Luke Marshall
+Luke Marshall 
 CS 322 Assignment 4
 Open and close time calculations
 for ACP-sanctioned brevets
@@ -56,8 +56,9 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
       if remaining_dist == 0:
          break
       diff = remaining_dist - maxs[j]
-      total_time += round(diff/MAX_TIMINGS[maxs[j]] * 60)
-      remaining_dist -= diff 
+      total_time += (diff/MAX_TIMINGS[maxs[j]])
+      remaining_dist -= diff
+   total_time = round(total_time * 60)
       
    return start_time.shift(minutes=total_time)
 
@@ -105,7 +106,8 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
       if remaining_dist == 0:
          break
       diff = remaining_dist - mins[j]
-      total_time += round(diff/MIN_TIMINGS[mins[j]] * 60)
+      total_time += (diff/MIN_TIMINGS[mins[j]])
       remaining_dist -= diff
+   total_time = round(total_time * 60)
 
    return start_time.shift(minutes=total_time)
