@@ -115,6 +115,13 @@
             var SCRIPT_ROOT = {{ request.script_root|tojson|safe }} ;
             var TIME_CALC_URL = SCRIPT_ROOT + "/_calc_times";
 
+            $(document).ready(function() {
+               $('.control').on('input', function() {
+                  var control = $(this).closest('.control');
+                  calc_times(control);
+               });
+            });
+
             function calc_times(control) {
             // retrieve the values from the page to send to the server
               var control_dist = control.find("input[name='km']").val();
